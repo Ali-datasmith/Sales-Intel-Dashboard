@@ -1,74 +1,70 @@
 """
-db.py - The analytical engine for SalesIntelDashboard.
-Uses DuckDB to run high-speed SQL aggregations on in-memory Polars DataFrames.
+theme.py - Visual identity for SalesIntelDashboard.
+Defines the Plotly dark-mode template and branded color palettes.
 """
 
-import duckdb
-import polars as pl
-from typing import Optional, List
+import plotly.graph_objects as go
+import plotly.io as pio
 
-class SalesDB:
-    def __init__(self):
-        """Initializes an in-process DuckDB connection."""
-        self.con = duckdb.connect(database=":memory:")
+# Branded Color Palette
+PRIMARY_ACCENT = "#00D4FF"  # Cyan for growth/positive
+SECONDARY_ACCENT = "#7000FF" # Indigo for targets
+DANGER = "#FF4B4B"           # Red for leakage/variance alerts
+SUCCESS = "#00CC96"          # Green for closed deals
+BACKGROUND_DARK = "#0E1117"  # Streamlit default dark
+SURFACE_LIGHT = "#262730"    # Lighter grey for card-like contrast
+TEXT_MAIN = "#FAFAFA"
+TEXT_DIM = "#BFBFBF"
 
-    def seed_data(self, df: pl.DataFrame) -> None:
-        """
-        Registers a Polars DataFrame as a virtual table named 'sales_data'.
-        
-        Args:
-            df: The cleaned Polars DataFrame from transform.py
-        """
-        if df.is_empty():
-            raise ValueError("Cannot seed database with an empty DataFrame.")
-            
-        # DuckDB can query Polars objects directly if they are in the local scope
-        self.con.register("sales_data", df)
+def apply_custom_theme():
+    """
+    Initializes and sets the global Plotly template for the application.
+    """
+    template = go.layout.Template()
 
-    def get_revenue_by_dimension(self, dimension: str) -> pl.DataFrame:
-        """
-        Aggregates revenue based on a specific dimension (e.g., 'region', 'rep').
-        
-        Input: dimension="region"
-        Output: pl.DataFrame([region, total_revenue])
-        """
-        # Note: Dimension is validated against a whitelist to prevent SQL injection
-        allowed = {"region", "rep", "product", "stage"}
-        if dimension not in allowed:
-            raise ValueError(f"Invalid dimension: {dimension}")
+    # Layout styling
+    template.layout = go.Layout(
+        plot_bgcolor="rgba(0,0,0,0)",
+        paper_bgcolor="rgba(0,0,0,0)",
+        font=dict(family="Inter, sans-serif", color=TEXT_MAIN, size=12),
+        title=dict(font=dict(size=18, color=TEXT_MAIN), x=0.05),
+        margin=dict(t=60, b=40, l=40, r=40),
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1,
+            font=dict(color=TEXT_DIM)
+        ),
+        xaxis=dict(
+            gridcolor="#333333",
+            zerolinecolor="#333333",
+            tickfont=dict(color=TEXT_DIM),
+            showline=True,
+            linecolor="#333333"
+        ),
+        yaxis=dict(
+            gridcolor="#333333",
+            zerolinecolor="#333333",
+            tickfont=dict(color=TEXT_DIM),
+            showline=True,
+            linecolor="#333333"
+        ),
+        colorway=[PRIMARY_ACCENT, SECONDARY_ACCENT, SUCCESS, "#FFAA00", DANGER]
+    )
 
-        query = f"""
-            SELECT {dimension}, SUM(revenue) as total_revenue
-            FROM sales_data
-            GROUP BY {dimension}
-            ORDER BY total_revenue DESC
-        """
-        return self.con.execute(query).pl()
+    # Register and set as default
+    pio.templates["sales_intel_dark"] = template
+    pio.templates.default = "sales_intel_dark"
 
-    def get_date_range_slice(self, start_date: str, end_date: str) -> pl.DataFrame:
-        """
-        Filters data by a date range and returns the full slice.
-        
-        Input: start_date="2024-01-01", end_date="2024-03-31"
-        Output: pl.DataFrame of transactions within range
-        """
-        query = """
-            SELECT * FROM sales_data 
-            WHERE date >= ? AND date <= ?
-        """
-        return self.con.execute(query, [start_date, end_date]).pl()
+def get_color_scale():
+    """Returns a continuous color scale for heatmaps/choropleths."""
+    return [
+        [0.0, BACKGROUND_DARK],
+        [0.5, SECONDARY_ACCENT],
+        [1.0, PRIMARY_ACCENT]
+    ]
 
-    def get_stage_counts(self) -> pl.DataFrame:
-        """
-        Returns count of deals per stage for funnel visualization.
-        """
-        query = """
-            SELECT stage, COUNT(*) as deal_count
-            FROM sales_data
-            GROUP BY stage
-            ORDER BY deal_count DESC
-        """
-        return self.con.execute(query).pl()
-
-# Singleton instance for the app
-db_engine = SalesDB()
+# Initialize on import
+apply_custom_theme()
