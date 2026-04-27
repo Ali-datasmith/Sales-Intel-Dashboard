@@ -1,6 +1,7 @@
 """
-transform.py - Data Cleaning & Normalization Layer.
-Uses Polars for high-speed vectorized transformations and type coercion.
+transform.py - The Data Sanitization Layer.
+Uses Polars for high-performance cleaning, schema enforcement, 
+and type safety.
 """
 
 import polars as pl
@@ -11,73 +12,70 @@ class DataTransformer:
     @staticmethod
     def clean_data(df: pl.DataFrame) -> pl.DataFrame:
         """
-        Orchestrates the full transformation pipeline.
-        
-        Args:
-            df: Raw Polars DataFrame from ingest.py
-            
-        Returns:
-            pl.DataFrame: Cleaned, typed, and normalized DataFrame.
+        Main entry point for the transformation pipeline.
+        Executes normalization, type-casting, and null handling.
         """
         if df.is_empty():
             return df
 
         return (
-            df.pipe(DataTransformer._normalize_column_names)
-              .pipe(DataTransformer._handle_duplicates)
-              .pipe(DataTransformer._coerce_types)
-              .pipe(DataTransformer._handle_nulls)
+            df.pipe(DataTransformer._normalize_headers)
+              .pipe(DataTransformer._clean_revenue)
+              .pipe(DataTransformer._parse_dates)
+              .pipe(DataTransformer._handle_categories)
+              .unique()
         )
 
     @staticmethod
-    def _normalize_column_names(df: pl.DataFrame) -> pl.DataFrame:
-        """Standardizes column names: lowercase and removes special chars/spaces."""
-        return df.rename({
+    def _normalize_headers(df: pl.DataFrame) -> pl.DataFrame:
+        """Standardizes column names to snake_case and removes special characters."""
+        new_cols = {
             col: re.sub(r'[^a-z0-9_]', '', col.lower().strip().replace(" ", "_")) 
             for col in df.columns
-        })
+        }
+        return df.rename(new_cols)
 
     @staticmethod
-    def _handle_duplicates(df: pl.DataFrame) -> pl.DataFrame:
-        """Removes exact duplicate rows."""
-        return df.unique()
-
-    @staticmethod
-    def _coerce_types(df: pl.DataFrame) -> pl.DataFrame:
-        """Fixes dates and cleans currency/numeric strings."""
+    def _clean_revenue(df: pl.DataFrame) -> pl.DataFrame:
+        """Extracts numeric values from currency strings and ensures Float64."""
+        if "revenue" not in df.columns:
+            return df
         
-        # 1. Clean Revenue: Remove $, commas, and cast to Float64
-        if "revenue" in df.columns:
-            if df["revenue"].dtype == pl.Utf8:
-                df = df.with_columns(
-                    pl.col("revenue")
-                    .str.replace_all(r"[$, ]", "")
-                    .cast(pl.Float64, strict=False)
-                    .fill_null(0.0)
-                )
+        # If data is string (e.g., "$1,200"), strip symbols and cast
+        if df["revenue"].dtype == pl.Utf8:
+            df = df.with_columns(
+                pl.col("revenue")
+                .str.replace_all(r"[$, ]", "")
+                .cast(pl.Float64, strict=False)
+            )
+        
+        return df.with_columns(pl.col("revenue").fill_null(0.0))
 
-        # 2. Robust Date Parsing
-        if "date" in df.columns:
-            # Attempt to parse common formats; strict=False turns failures to Null
+    @staticmethod
+    def _parse_dates(df: pl.DataFrame) -> pl.DataFrame:
+        """Handles both pre-parsed datetimes and raw string dates."""
+        if "date" not in df.columns:
+            return df
+
+        # Only parse if column is string; if it's already datetime, Polars handles it
+        if df["date"].dtype == pl.Utf8:
             df = df.with_columns(
                 pl.col("date").str.to_date(strict=False)
             )
-            # Drop rows where date couldn't be parsed to prevent DB errors
-            df = df.filter(pl.col("date").is_not_null())
-
-        return df
+        
+        # Ensure we drop invalid dates that couldn't be parsed
+        return df.filter(pl.col("date").is_not_null())
 
     @staticmethod
-    def _handle_nulls(df: pl.DataFrame) -> pl.DataFrame:
-        """Fills missing categorical data with placeholders."""
-        categorical_cols = ["rep", "region", "product", "stage"]
+    def _handle_categories(df: pl.DataFrame) -> pl.DataFrame:
+        """Ensures core categorical columns exist and fills missing values."""
+        required_cats = ["rep", "region", "product", "stage"]
         
-        for col in categorical_cols:
-            if col in df.columns:
-                df = df.with_columns(
-                    pl.col(col).fill_null("Unknown")
-                )
+        for col in required_cats:
+            if col not in df.columns:
+                # Create the column if missing to prevent dashboard crashes
+                df = df.with_columns(pl.lit("Unknown").alias(col))
+            else:
+                df = df.with_columns(pl.col(col).fill_null("Unknown"))
+        
         return df
-
-# Usage: 
-# clean_df = DataTransformer.clean_data(raw_df)
