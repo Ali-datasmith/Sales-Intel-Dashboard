@@ -14,7 +14,7 @@ from views import DashboardViews
 # 1. Page Configuration
 st.set_page_config(
     page_title="Sales Intel Dashboard",
-    page_icon="📈",
+    page_icon="⚡",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -23,7 +23,7 @@ st.set_page_config(
 apply_custom_theme()
 
 def main():
-    st.title("🛡️ Sales Intel Dashboard")
+    st.title("⚡ Sales Intel Dashboard")
     
     # 3. Data Ingestion Section
     uploaded_file = st.sidebar.file_uploader("Upload CRM Export (CSV/Excel)", type=["csv", "xlsx"])
