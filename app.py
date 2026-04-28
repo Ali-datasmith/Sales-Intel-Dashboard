@@ -63,7 +63,18 @@ def main():
             st.info("Please ensure your file contains: Date, Revenue, Rep, Region, Product, Stage")
     else:
         st.warning("Please upload a data file in the sidebar to begin.")
-        st.image("https://via.placeholder.com/800x400?text=Awaiting+Data+Upload", use_column_width=True)
+        
+        # --- FIXED IMAGE & BANNER BLOCK ---
+        st.image("https://images.unsplash.com/photo-1551288049-bbbda536339a?q=80&w=2070&auto=format&fit=crop", 
+                 caption="System Status: Ready for Data Ingestion", 
+                 use_column_width=True)
+
+        st.markdown("""
+            <div style="text-align: center; padding: 20px; background-color: #1E1E1E; border-radius: 10px; border: 1px solid #333;">
+                <h3 style="color: #4CAF50; margin: 0;">📥 Engine Standby</h3>
+                <p style="color: #AAAAAA; margin: 10px 0 0 0;">The Sales Intel Engine is initialized. Please upload a CRM export (.csv or .xlsx) via the sidebar to generate live intelligence reports.</p>
+            </div>
+            """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
