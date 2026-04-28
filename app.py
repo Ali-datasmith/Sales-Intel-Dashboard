@@ -2,6 +2,10 @@
 app.py - The Main Entry Point.
 Coordinates data flow between ingestion, transformation, and visualization.
 """
+"""
+app.py - The Main Entry Point.
+Coordinates data flow between ingestion, transformation, and visualization.
+"""
 
 import streamlit as st
 from theme import apply_custom_theme
@@ -55,29 +59,26 @@ def main():
             st.error(f"Application Error: {e}")
             st.info("Please ensure your file contains: Date, Revenue, Rep, Region, Product, Stage")
     else:
-        # --- THE ABSOLUTE FIX ---
-        # We REMOVED st.image entirely to kill the broken icon bug.
-        # Instead, we use a high-end CSS Hero Component.
-        
+        # --- NEON CYAN HERO SECTION ---
         st.markdown("""
             <div style="
-                background: linear-gradient(135deg, #1e1e1e 0%, #121212 100%);
+                background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
                 padding: 60px;
                 border-radius: 20px;
                 border: 1px solid #333;
                 text-align: center;
                 margin-top: 20px;
-                box-shadow: 0px 10px 30px rgba(0,0,0,0.5);
+                box-shadow: 0px 10px 40px rgba(0, 251, 255, 0.1);
             ">
-                <h1 style="color: #FFD700; font-size: 3em; margin-bottom: 10px;">⚡</h1>
-                <h2 style="color: #ffffff; font-family: sans-serif; font-weight: 700; margin-bottom: 20px;">
+                <h1 style="color: #FFD700; font-size: 3.5em; margin-bottom: 15px; filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));">⚡</h1>
+                <h2 style="color: #00FBFF; font-family: 'Segoe UI', sans-serif; font-weight: 800; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;">
                     Terminal Ready for Ingestion
                 </h2>
-                <p style="color: #888; font-size: 1.2em; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+                <p style="color: #999; font-size: 1.2em; max-width: 600px; margin: 0 auto; line-height: 1.6;">
                     The high-performance analytical core is primed and standing by. 
-                    Upload your CRM data in the sidebar to unlock real-time sales intelligence.
+                    Upload your CRM data in the sidebar to unlock <span style="color: #00FBFF;">real-time sales intelligence</span>.
                 </p>
-                <div style="margin-top: 30px; height: 2px; background: linear-gradient(90deg, transparent, #FFD700, transparent); width: 50%; margin-left: 25%;"></div>
+                <div style="margin-top: 40px; height: 3px; background: linear-gradient(90deg, transparent, #00FBFF, transparent); width: 60%; margin-left: 20%; box-shadow: 0 0 10px #00FBFF;"></div>
             </div>
             """, unsafe_allow_html=True)
 
