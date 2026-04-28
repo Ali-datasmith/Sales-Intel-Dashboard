@@ -2,10 +2,6 @@
 app.py - The Main Entry Point.
 Coordinates data flow between ingestion, transformation, and visualization.
 """
-"""
-app.py - The Main Entry Point.
-Coordinates data flow between ingestion, transformation, and visualization.
-"""
 
 import streamlit as st
 from theme import apply_custom_theme
