@@ -39,12 +39,6 @@ def main():
             clean_df = DataTransformer.clean_data(raw_df)
             db_engine.seed_data(clean_df)
             
-            # --- ADDED PDF DOWNLOAD BUTTON ---
-            report_gen = PDFReport(clean_df)
-            pdf_bytes = report_gen.generate()
-            st.sidebar.download_button("📥 Download PDF Report", data=pdf_bytes, file_name="Sales_Report.pdf", mime="application/pdf")
-            # ----------------------------------
-
             st.sidebar.markdown("""
                 <div style="padding:10px; border-radius:5px; border:1px solid #00FBFF; background-color:rgba(0,251,255,0.1); color:#00FBFF; text-align:center; font-weight:bold;">
                     ⚡ ENGINE PRIMED & READY
