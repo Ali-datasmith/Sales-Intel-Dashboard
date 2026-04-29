@@ -129,7 +129,7 @@ Resource usage stays well within free-tier limits (1 GB RAM) for typical CRM exp
 **Muhammad Ali Rajput**
 Data App Developer · Python · Streamlit · Analytics Engineering
 
-- GitHub: [github.com/YOUR_GITHUB_USERNAME](https://github.com/YOUR_GITHUB_USERNAME)
+- GitHub: [github.com/Ali-datasmith](https://github.com/Ali-datasmith)
 - LinkedIn: [linkedin.com/in/YOUR_LINKEDIN_USERNAME](https://linkedin.com/in/YOUR_LINKEDIN_USERNAME)
 
 ---
