@@ -35,9 +35,6 @@ def main():
     
     if uploaded_file:
         try:
-            report_gen = PDFReport(clean_df)
-            pdf_bytes = report_gen.generate()
-            st.sidebar.download_button("Download PDF", data=pdf_bytes, file_name="report.pdf")
             raw_df = DataIngestor.load_data(uploaded_file)
             clean_df = DataTransformer.clean_data(raw_df)
             db_engine.seed_data(clean_df)
