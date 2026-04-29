@@ -1,9 +1,5 @@
+
 streamlit
-polars
-duckdb
-plotly
+fpdf
 pandas
-openpyxl
-xlrd
-pyarrow
-numpy
+polars
