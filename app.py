@@ -7,7 +7,6 @@ from filters import SidebarFilters
 from views import DashboardViews
 from utils import generate_sample_data 
 
-# 1. Page Configuration
 st.set_page_config(
     page_title="Sales Intel Terminal",
     page_icon="⚡",
@@ -22,7 +21,7 @@ def main():
     
     with st.sidebar:
         st.markdown("### 📥 Data Ingestion")
-        uploaded_file = st.file_uploader("Upload CRM Export", type=["csv", "xlsx"])
+        uploaded_file = st.sidebar.file_uploader("Upload CRM Export", type=["csv", "xlsx"])
         
         sample_csv = generate_sample_data()
         st.download_button(
@@ -62,36 +61,28 @@ def main():
         except Exception as e:
             st.error(f"Application Error: {e}")
     else:
-        # STEP 3: METRIC SKELETONS
+        # SKELETONS
         col1, col2, col3 = st.columns(3)
         for col in [col1, col2, col3]:
-            col.markdown("""
-                <div style="background-color:#161616; padding:20px; border-radius:10px; border:1px solid #222; text-align:center; color:#444;">
-                    <small>AWAITING DATA</small><br><b style="font-size:1.5em;">$ 0.00</b>
-                </div>
-            """, unsafe_allow_html=True)
+            col.markdown('<div style="background-color:#161616; padding:20px; border-radius:10px; border:1px solid #222; text-align:center; color:#444;"><small>AWAITING DATA</small><br><b style="font-size:1.5em;">$ 0.00</b></div>', unsafe_allow_html=True)
 
-        # --- UPDATED HERO SECTION WITH PROFESSIONAL COPY ---
+        # FIXED HERO SECTION (Indentation matters here!)
         st.markdown("""
-            <div style="background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); padding: 60px; border-radius: 20px; border: 1px solid #333; text-align: center; margin-top: 20px; box-shadow: 0px 10px 40px rgba(0, 251, 255, 0.1);">
-                <h1 style="color: #FFD700; font-size: 3.5em; margin-bottom: 15px; filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));">⚡</h1>
-                
-                <h2 style="color: #00FBFF; font-family: 'Segoe UI', sans-serif; font-weight: 800; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;">
-                    Ready to Generate Insights
-                </h2>
-                
-                <p style="color: #999; font-size: 1.2em; max-width: 600px; margin: 0 auto; line-height: 1.6;">
-                    Please upload your CRM data in the sidebar to begin your 
-                    <span style="color: #00FBFF; font-weight: bold;">real-time sales analysis</span>.
-                </p>
-                
-                <div style="margin-top: 40px; height: 3px; background: linear-gradient(90deg, transparent, #00FBFF, transparent); width: 60%; margin-left: 20%; box-shadow: 0 0 10px #00FBFF;"></div>
-            </div>
-            
-            <div style="text-align: center; color: #444; margin-top: 50px; font-size: 0.8em;">
-                Developed by <span style="color: #00FBFF;">Ali-datasmith</span> | High-Velocity Polars Engine ⚡
-            </div>
-        """, unsafe_allow_html=True)
+<div style="background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); padding: 60px; border-radius: 20px; border: 1px solid #333; text-align: center; margin-top: 20px; box-shadow: 0px 10px 40px rgba(0, 251, 255, 0.1);">
+    <h1 style="color: #FFD700; font-size: 3.5em; margin-bottom: 15px; filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));">⚡</h1>
+    <h2 style="color: #00FBFF; font-family: 'Segoe UI', sans-serif; font-weight: 800; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;">
+        Ready to Generate Insights
+    </h2>
+    <p style="color: #999; font-size: 1.2em; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+        Please upload your CRM data in the sidebar to begin your 
+        <span style="color: #00FBFF; font-weight: bold;">real-time sales analysis</span>.
+    </p>
+    <div style="margin-top: 40px; height: 3px; background: linear-gradient(90deg, transparent, #00FBFF, transparent); width: 60%; margin-left: 20%; box-shadow: 0 0 10px #00FBFF;"></div>
+</div>
+<div style="text-align: center; color: #444; margin-top: 50px; font-size: 0.8em;">
+    Developed by <span style="color: #00FBFF;">Ali-datasmith</span> | High-Velocity Polars Engine ⚡
+</div>
+""", unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
