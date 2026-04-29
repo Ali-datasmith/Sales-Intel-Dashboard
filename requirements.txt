@@ -3,3 +3,4 @@ streamlit
 fpdf
 pandas
 polars
+openpyxl
