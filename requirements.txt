@@ -1,6 +1,5 @@
 streamlit
+
 pandas
 polars
-duckdb
-plotly
 openpyxl
