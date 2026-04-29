@@ -1,3 +1,4 @@
+from reports import PDFReport
 import streamlit as st
 from theme import apply_custom_theme
 from ingest import DataIngestor
@@ -45,6 +46,19 @@ def main():
             """, unsafe_allow_html=True)
             
             filter_state = SidebarFilters.render(clean_df)
+            # PDF EXPORT SYSTEM
+            st.sidebar.markdown("---")
+            st.sidebar.markdown("### 📄 EXPORT PROTOCOL")
+            report_gen = PDFReport(clean_df)
+            pdf_bytes = report_gen.generate()
+            
+            st.sidebar.download_button(
+                label="⚡ DOWNLOAD INTELLIGENCE PDF",
+                data=pdf_bytes,
+                file_name="Sales_Intel_Export.pdf",
+                mime="application/pdf"
+            )
+
             page = st.sidebar.radio("Navigation", ["Overview", "Regional Breakdown", "Funnel Analysis", "Rep Performance"])
             
             st.divider()
