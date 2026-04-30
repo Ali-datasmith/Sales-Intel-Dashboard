@@ -32,7 +32,7 @@ The result is a dashboard that feels instant for the end user, deploys on Stream
 
 ---
 ## 🖥️ Dashboard Preview
-![Sales Intel Terminal Screenshot](<img width="1365" height="765" alt="Screenshot 2026-04-30 11 55 43 PM" src="https://github.com/user-attachments/assets/2ec4ec1b-de95-4474-ba22-f73b0f28850b" />
+![Sales Intel Terminal Screenshot](<img width="1365" height="765" alt="dashboard_preview" src="https://github.com/user-attachments/assets/6761ddcf-6ead-4830-8a56-2a0ac62dbb3e" />
 )
 ---
 
