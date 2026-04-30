@@ -31,6 +31,10 @@ The result is a dashboard that feels instant for the end user, deploys on Stream
 - **Zero infrastructure** — runs entirely in-memory via DuckDB; deploys on Streamlit Cloud free tier out of the box
 
 ---
+## 🖥️ Dashboard Preview
+![Sales Intel Terminal Screenshot](<img width="1365" height="765" alt="Screenshot 2026-04-30 11 55 43 PM" src="https://github.com/user-attachments/assets/2ec4ec1b-de95-4474-ba22-f73b0f28850b" />
+)
+---
 
 ## Tech Stack
 
