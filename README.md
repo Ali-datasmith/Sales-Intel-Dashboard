@@ -32,10 +32,13 @@ The result is a dashboard that feels instant for the end user, deploys on Stream
 
 ---
 ## 🖥️ Dashboard Preview
-![Sales Intel Terminal Screenshot](<img width="1365" height="765" alt="dashboard_preview" src="https://github.com/user-attachments/assets/6761ddcf-6ead-4830-8a56-2a0ac62dbb3e" />
-)
+<img width="1365" height="765" alt="dashboard_preview" src="https://github.com/user-attachments/assets/af9ce7d7-fbf4-4742-8b96-4c6de0d9c23d" />
 ---
+---
+## 🎥 Dashboard Video
 
+
+---
 ## Tech Stack
 
 | Layer | Technology | Role |
