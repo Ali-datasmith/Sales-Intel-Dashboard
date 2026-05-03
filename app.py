@@ -14,7 +14,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- ENHANCED STYLING BLOCK ---
+# --- FIXED STYLING BLOCK ---
 st.markdown("""
 <style>
     /* Base Colors & Scrollbar */
@@ -34,16 +34,20 @@ st.markdown("""
     @keyframes typing { from { width: 0 } to { width: 100% } }
     @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #00FBFF; } }
 
-    /* Status Badge */
+    /* Status Badge FIX: Forced Cyan Colors */
     .status-badge {
         padding: 5px 12px;
         border-radius: 20px;
         font-size: 0.75em;
         font-weight: bold;
-        border: 1px solid #00FBFF;
+        border: 1px solid #00FBFF !important;
+        background-color: rgba(0, 251, 255, 0.1) !important;
+        color: #00FBFF !important;
         display: inline-block;
         margin-bottom: 15px;
     }
+    
+    /* Beating Effect (Pulse) - Keeping it but making it subtle Cyan */
     .pulse { animation: pulse-status 2s infinite; }
     @keyframes pulse-status {
         0% { box-shadow: 0 0 0 0px rgba(0, 251, 255, 0.4); }
@@ -51,7 +55,7 @@ st.markdown("""
         100% { box-shadow: 0 0 0 0px rgba(0, 251, 255, 0); }
     }
 
-    /* Original Glow & Sidebar */
+    /* Sidebar Fixes */
     [data-testid="stSidebar"] { border-right: 2px solid #00FBFF !important; }
     [data-testid="stFileUploadDropzone"] {
         border: 2px dashed #00FBFF !important;
@@ -59,6 +63,11 @@ st.markdown("""
         transition: 0.3s all ease;
     }
     [data-testid="stFileUploadDropzone"]:hover { box-shadow: 0 0 20px #00FBFF; }
+    
+    /* Ensuring all sidebar text follows the theme */
+    [data-testid="stSidebar"] p, [data-testid="stSidebar"] h3 {
+        color: #00FBFF !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -68,10 +77,11 @@ def main():
     st.title("⚡ Sales Intel Terminal")
 
     with st.sidebar:
+        # Status Badge logic with forced color
         if 'data_processed' not in st.session_state:
-            st.markdown('<div class="status-badge" style="color:#888; border-color:#444;">⚪ SYSTEM IDLE</div>', unsafe_allow_html=True)
+            st.markdown('<div class="status-badge" style="color:#888 !important; border-color:#444 !important; background-color:transparent !important;">⚪ SYSTEM IDLE</div>', unsafe_allow_html=True)
         else:
-            st.markdown('<div class="status-badge pulse" style="color:#00FBFF;">🟢 POLARS ACTIVE</div>', unsafe_allow_html=True)
+            st.markdown('<div class="status-badge pulse">🟢 POLARS ACTIVE</div>', unsafe_allow_html=True)
 
         st.markdown("### 📥 Data Ingestion")
         uploaded_file = st.sidebar.file_uploader("Upload CRM Export", type=["csv", "xlsx"])
