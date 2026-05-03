@@ -14,40 +14,42 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- FIXED STYLING BLOCK ---
+# --- THE ULTIMATE CYAN THEME FIX ---
 st.markdown("""
 <style>
-    /* Base Colors & Scrollbar */
+    /* 1. Global Text & Scrollbar */
     h1, h2, h3, h4 { color: #00FBFF !important; font-family: 'Courier New', monospace; }
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-thumb { background: #00FBFF; border-radius: 10px; }
 
-    /* Typewriter Effect */
-    .typewriter h2 {
-      overflow: hidden;
-      border-right: .15em solid #00FBFF;
-      white-space: nowrap;
-      margin: 0 auto;
-      letter-spacing: .15em;
-      animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+    /* 2. Fix for Red Tabs (Active Tab Indicator) */
+    button[data-baseweb="tab"] { color: white !important; }
+    button[data-baseweb="tab"][aria-selected="true"] { 
+        color: #00FBFF !important; 
+        border-bottom-color: #00FBFF !important; 
     }
-    @keyframes typing { from { width: 0 } to { width: 100% } }
-    @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #00FBFF; } }
+    div[data-baseweb="tab-highlight"] { background-color: #00FBFF !important; }
 
-    /* Status Badge FIX: Forced Cyan Colors */
+    /* 3. Fix for Red Multiselect Badges (Tags) */
+    span[data-baseweb="tag"] {
+        background-color: rgba(0, 251, 255, 0.1) !important;
+        color: #00FBFF !important;
+        border: 1px solid #00FBFF !important;
+    }
+    span[data-baseweb="tag"] svg { fill: #00FBFF !important; }
+
+    /* 4. Status Badge & Pulse */
     .status-badge {
         padding: 5px 12px;
         border-radius: 20px;
         font-size: 0.75em;
         font-weight: bold;
         border: 1px solid #00FBFF !important;
-        background-color: rgba(0, 251, 255, 0.1) !important;
+        background-color: rgba(0, 251, 255, 0.05) !important;
         color: #00FBFF !important;
         display: inline-block;
         margin-bottom: 15px;
     }
-    
-    /* Beating Effect (Pulse) - Keeping it but making it subtle Cyan */
     .pulse { animation: pulse-status 2s infinite; }
     @keyframes pulse-status {
         0% { box-shadow: 0 0 0 0px rgba(0, 251, 255, 0.4); }
@@ -55,19 +57,16 @@ st.markdown("""
         100% { box-shadow: 0 0 0 0px rgba(0, 251, 255, 0); }
     }
 
-    /* Sidebar Fixes */
+    /* 5. Sidebar & File Uploader */
     [data-testid="stSidebar"] { border-right: 2px solid #00FBFF !important; }
     [data-testid="stFileUploadDropzone"] {
         border: 2px dashed #00FBFF !important;
         background: rgba(0, 251, 255, 0.05) !important;
-        transition: 0.3s all ease;
     }
     [data-testid="stFileUploadDropzone"]:hover { box-shadow: 0 0 20px #00FBFF; }
-    
-    /* Ensuring all sidebar text follows the theme */
-    [data-testid="stSidebar"] p, [data-testid="stSidebar"] h3 {
-        color: #00FBFF !important;
-    }
+
+    /* 6. Metrics & General UI */
+    [data-testid="stMetric"] { border-left: 2px solid #00FBFF; padding-left: 10px; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -77,9 +76,8 @@ def main():
     st.title("⚡ Sales Intel Terminal")
 
     with st.sidebar:
-        # Status Badge logic with forced color
         if 'data_processed' not in st.session_state:
-            st.markdown('<div class="status-badge" style="color:#888 !important; border-color:#444 !important; background-color:transparent !important;">⚪ SYSTEM IDLE</div>', unsafe_allow_html=True)
+            st.markdown('<div class="status-badge" style="color:#888 !important; border-color:#444 !important;">⚪ SYSTEM IDLE</div>', unsafe_allow_html=True)
         else:
             st.markdown('<div class="status-badge pulse">🟢 POLARS ACTIVE</div>', unsafe_allow_html=True)
 
@@ -108,24 +106,13 @@ def main():
         except Exception as e:
             st.error(f"Error: {e}")
     else:
+        # Typewriter Landing Page
         st.markdown('<div class="typewriter"><h2>Ready to Generate Insights</h2></div>', unsafe_allow_html=True)
         st.markdown("""
         <div style="background: rgba(10,10,10,0.4); padding: 40px; border-radius: 15px; border: 1px solid #222; text-align: center; margin-top: 20px;">
             <p style="color: #888; font-size: 1.2em;">Terminal awaiting CRM data stream via Sidebar.</p>
         </div>
         """, unsafe_allow_html=True)
-
-        st.write("---")
-        c1, c2, c3 = st.columns(3)
-        with c1:
-            st.markdown("#### 1. Ingest")
-            st.caption("Upload your raw sales CSV or Excel export.")
-        with c2:
-            st.markdown("#### 2. Process")
-            st.caption("Polars engine cleans and transforms data instantly.")
-        with c3:
-            st.markdown("#### 3. Analyze")
-            st.caption("Gain deep insights through interactive visual views.")
 
 if __name__ == "__main__":
     main()
