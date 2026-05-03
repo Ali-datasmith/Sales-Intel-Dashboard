@@ -1,4 +1,5 @@
 import streamlit as st
+from reports import PDFReport
 from theme import apply_custom_theme
 from ingest import DataIngestor
 from transform import DataTransformer
@@ -14,67 +15,62 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- STUNNING UI INJECTION (The Markdown Block) ---
+# --- THE STUNNING MARKDOWN BLOCK ---
 st.markdown("""
 <style>
-    /* 1. Global Headings & Scrollbar */
-    h1, h2, h3 { color: #00FBFF !important; font-family: 'Segoe UI', sans-serif; }
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-thumb { background: #00FBFF; border-radius: 10px; box-shadow: 0 0 10px #00FBFF; }
-    
-    /* 2. Sidebar Border & Tags */
-    section[data-testid="stSidebar"] {
-        border-right: 2px solid #00FBFF !important;
-        box-shadow: 5px 0px 15px rgba(0, 251, 255, 0.1);
-    }
-    span[data-baseweb="tag"] { background-color: #00FBFF !important; color: black !important; }
+    /* 1. Headings Cyan */
+    h1, h2, h3, h4, h5, h6 { color: #00FBFF !important; }
 
-    /* 3. File Uploader Glow */
-    section[data-testid="stFileUploadDropzone"] {
+    /* 2. Sidebar Border & Tags (Red to Cyan) */
+    [data-testid="stSidebar"] { border-right: 2px solid #00FBFF !important; }
+    [data-baseweb="tag"] { background-color: #00FBFF !important; color: #000 !important; }
+
+    /* 3. File Uploader Glow Effect */
+    [data-testid="stFileUploadDropzone"] {
         border: 2px dashed #00FBFF !important;
         background: rgba(0, 251, 255, 0.05) !important;
-        transition: 0.3s;
+        transition: all 0.3s ease-in-out;
     }
-    section[data-testid="stFileUploadDropzone"]:hover {
-        box-shadow: 0 0 20px rgba(0, 251, 255, 0.4);
-    }
-
-    /* 4. Pulse Animation for Engine Button */
-    .stDownloadButton button, div[style*="background-color:rgba(0,251,255,0.1)"] {
-        animation: pulse-cyan 2s infinite;
-    }
-    @keyframes pulse-cyan {
-        0% { box-shadow: 0 0 0 0 rgba(0, 251, 255, 0.7); }
-        70% { box-shadow: 0 0 0 10px rgba(0, 251, 255, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(0, 251, 255, 0); }
+    [data-testid="stFileUploadDropzone"]:hover {
+        box-shadow: 0 0 15px #00FBFF;
     }
 
-    /* 5. Metric Cards Fade-Slide-Up */
-    div[data-testid="stMetric"], div[style*="background-color:#161616"] {
-        animation: slideUp 0.8s ease-out;
+    /* 4. Engine Primed Pulse Animation */
+    div[style*="background-color:rgba(0,251,255,0.1)"] {
+        animation: pulse-animation 2s infinite;
     }
-    @keyframes slideUp {
-        from { opacity: 0; transform: translateY(30px); }
+    @keyframes pulse-animation {
+        0% { box-shadow: 0 0 0 0px rgba(0, 251, 255, 0.7); }
+        100% { box-shadow: 0 0 0 10px rgba(0, 251, 255, 0); }
+    }
+
+    /* 5. Metric Cards Fade-Slide-Up Animation */
+    [data-testid="stMetric"], div[style*="background-color:#161616"] {
+        animation: fadeSlideUp 0.8s ease-out forwards;
+    }
+    @keyframes fadeSlideUp {
+        from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
     }
 
-    /* 6. Border Scan Animation for Tables */
+    /* 6. DataFrame Border Scan Animation */
     .stDataFrame {
-        border: 1px solid #333;
+        border: 1px solid #333 !important;
         position: relative;
-        overflow: hidden;
     }
-    .stDataFrame::after {
-        content: "";
-        position: absolute;
-        top: -50%; left: -50%; width: 200%; height: 200%;
-        background: linear-gradient(to bottom, transparent, rgba(0,251,255,0.1), transparent);
-        animation: scan 4s linear infinite;
+    .stDataFrame::before {
+        content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+        background: #00FBFF; animation: scanLine 3s linear infinite;
     }
-    @keyframes scan { from { transform: translateY(-100%); } to { transform: translateY(100%); } }
+    @keyframes scanLine { 0% { top: 0%; } 100% { top: 100%; } }
 
     /* 7. Loading Spinner Cyan */
-    div[data-testid="stLoadingIcon"] svg { fill: #00FBFF !important; }
+    [data-testid="stLoadingIcon"] svg { fill: #00FBFF !important; }
+
+    /* 8. Custom Cyan Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0e1117; }
+    ::-webkit-scrollbar-thumb { background: #00FBFF; border-radius: 10px; }
 </style>
 """, unsafe_allow_html=True)
 
