@@ -14,62 +14,51 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- THE STUNNING MARKDOWN BLOCK (ONLY CSS & ANIMATIONS) ---
+# --- ENHANCED STYLING BLOCK ---
 st.markdown("""
 <style>
-    /* 1. Headings Color Cyan */
-    h1, h2, h3, h4, h5, h6 { color: #00FBFF !important; }
+    /* Base Colors & Scrollbar */
+    h1, h2, h3, h4 { color: #00FBFF !important; font-family: 'Courier New', monospace; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-thumb { background: #00FBFF; border-radius: 10px; }
 
-    /* 2. Sidebar Border & Tags Cyan */
-    [data-testid="stSidebar"] { border-right: 2px solid #00FBFF !important; }
-    [data-baseweb="tag"] { background-color: #00FBFF !important; color: #000 !important; }
+    /* Typewriter Effect */
+    .typewriter h2 {
+      overflow: hidden;
+      border-right: .15em solid #00FBFF;
+      white-space: nowrap;
+      margin: 0 auto;
+      letter-spacing: .15em;
+      animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+    }
+    @keyframes typing { from { width: 0 } to { width: 100% } }
+    @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #00FBFF; } }
 
-    /* 3. File Uploader Glow Effect */
-    [data-testid="stFileUploadDropzone"] {
-        border: 2px dashed #00FBFF !important;
-        background: rgba(0, 251, 255, 0.05) !important;
-        transition: all 0.3s ease;
+    /* Status Badge */
+    .status-badge {
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.75em;
+        font-weight: bold;
+        border: 1px solid #00FBFF;
+        display: inline-block;
+        margin-bottom: 15px;
     }
-    [data-testid="stFileUploadDropzone"]:hover {
-        box-shadow: 0 0 20px #00FBFF;
-    }
-
-    /* 4. Pulse Animation for Alert */
-    div[style*="background-color:rgba(0,251,255,0.1)"] {
-        animation: pulse-cyan 2s infinite;
-        border: 1px solid #00FBFF !important;
-    }
-    @keyframes pulse-cyan {
+    .pulse { animation: pulse-status 2s infinite; }
+    @keyframes pulse-status {
         0% { box-shadow: 0 0 0 0px rgba(0, 251, 255, 0.4); }
-        70% { box-shadow: 0 0 0 10px rgba(0, 251, 255, 0); }
+        70% { box-shadow: 0 0 0 8px rgba(0, 251, 255, 0); }
         100% { box-shadow: 0 0 0 0px rgba(0, 251, 255, 0); }
     }
 
-    /* 5. Metric Cards Fade-Slide-Up */
-    [data-testid="stMetric"] {
-        animation: fadeSlideUp 0.8s ease-out forwards;
+    /* Original Glow & Sidebar */
+    [data-testid="stSidebar"] { border-right: 2px solid #00FBFF !important; }
+    [data-testid="stFileUploadDropzone"] {
+        border: 2px dashed #00FBFF !important;
+        background: rgba(0, 251, 255, 0.05) !important;
+        transition: 0.3s all ease;
     }
-    @keyframes fadeSlideUp {
-        from { opacity: 0; transform: translateY(30px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* 6. DataFrame Border Scan */
-    .stDataFrame {
-        border: 1px solid #333 !important;
-        position: relative;
-    }
-    .stDataFrame::before {
-        content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
-        background: #00FBFF; box-shadow: 0 0 10px #00FBFF;
-        animation: scanLine 4s linear infinite;
-    }
-    @keyframes scanLine { 0% { top: 0%; } 100% { top: 100%; } }
-
-    /* 7. Loading Spinner & Scrollbar */
-    [data-testid="stLoadingIcon"] svg { fill: #00FBFF !important; }
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-thumb { background: #00FBFF; border-radius: 10px; }
+    [data-testid="stFileUploadDropzone"]:hover { box-shadow: 0 0 20px #00FBFF; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -79,6 +68,11 @@ def main():
     st.title("⚡ Sales Intel Terminal")
 
     with st.sidebar:
+        if 'data_processed' not in st.session_state:
+            st.markdown('<div class="status-badge" style="color:#888; border-color:#444;">⚪ SYSTEM IDLE</div>', unsafe_allow_html=True)
+        else:
+            st.markdown('<div class="status-badge pulse" style="color:#00FBFF;">🟢 POLARS ACTIVE</div>', unsafe_allow_html=True)
+
         st.markdown("### 📥 Data Ingestion")
         uploaded_file = st.sidebar.file_uploader("Upload CRM Export", type=["csv", "xlsx"])
         sample_csv = generate_sample_data()
@@ -89,21 +83,39 @@ def main():
             raw_df = DataIngestor.load_data(uploaded_file)
             clean_df = DataTransformer.clean_data(raw_df)
             db_engine.seed_data(clean_df)
+            st.session_state['data_processed'] = True
 
-            st.sidebar.markdown('<div style="padding:10px; border-radius:5px; border:1px solid #00FBFF; background-color:rgba(0,251,255,0.1); color:#00FBFF; text-align:center; font-weight:bold;">⚡ ENGINE PRIMED & READY</div>', unsafe_allow_html=True)
+            st.sidebar.markdown('<div style="padding:10px; border-radius:5px; border:1px solid #00FBFF; background-color:rgba(0,251,255,0.1); color:#00FBFF; text-align:center; font-weight:bold;">⚡ ENGINE PRIMED</div>', unsafe_allow_html=True)
 
             filter_state = SidebarFilters.render(clean_df)
-            page = st.sidebar.radio("Navigation", ["Overview", "Regional Breakdown", "Funnel Analysis", "Rep Performance"])
-
-            if page == "Overview": DashboardViews.show_overview()
-            elif page == "Regional Breakdown": DashboardViews.show_regional_breakdown()
-            elif page == "Funnel Analysis": DashboardViews.show_funnel_analysis()
-            elif page == "Rep Performance": DashboardViews.show_rep_performance()
+            
+            tab1, tab2, tab3, tab4 = st.tabs(["📊 Overview", "🗺️ Regional", "🌪️ Funnel", "👤 Reps"])
+            with tab1: DashboardViews.show_overview()
+            with tab2: DashboardViews.show_regional_breakdown()
+            with tab3: DashboardViews.show_funnel_analysis()
+            with tab4: DashboardViews.show_rep_performance()
 
         except Exception as e:
             st.error(f"Error: {e}")
     else:
-        st.markdown('<div style="background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); padding: 60px; border-radius: 20px; border: 1px solid #333; text-align: center; margin-top: 20px;"><h1 style="color: #FFD700; font-size: 3.5em;">⚡</h1><h2 style="color: #00FBFF;">Ready to Generate Insights</h2><p style="color: #999;">Upload your CRM data to begin.</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="typewriter"><h2>Ready to Generate Insights</h2></div>', unsafe_allow_html=True)
+        st.markdown("""
+        <div style="background: rgba(10,10,10,0.4); padding: 40px; border-radius: 15px; border: 1px solid #222; text-align: center; margin-top: 20px;">
+            <p style="color: #888; font-size: 1.2em;">Terminal awaiting CRM data stream via Sidebar.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.write("---")
+        c1, c2, c3 = st.columns(3)
+        with c1:
+            st.markdown("#### 1. Ingest")
+            st.caption("Upload your raw sales CSV or Excel export.")
+        with c2:
+            st.markdown("#### 2. Process")
+            st.caption("Polars engine cleans and transforms data instantly.")
+        with c3:
+            st.markdown("#### 3. Analyze")
+            st.caption("Gain deep insights through interactive visual views.")
 
 if __name__ == "__main__":
     main()
