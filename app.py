@@ -1,5 +1,4 @@
 import streamlit as st
-from reports import PDFReport
 from theme import apply_custom_theme
 from ingest import DataIngestor
 from transform import DataTransformer
@@ -15,13 +14,13 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- THE STUNNING MARKDOWN BLOCK ---
+# --- THE STUNNING MARKDOWN BLOCK (EXACTLY AS REQUESTED) ---
 st.markdown("""
 <style>
-    /* 1. Headings Cyan */
+    /* 1. Headings Color Cyan */
     h1, h2, h3, h4, h5, h6 { color: #00FBFF !important; }
 
-    /* 2. Sidebar Border & Tags (Red to Cyan) */
+    /* 2. Sidebar Border Cyan & Tags Cyan */
     [data-testid="stSidebar"] { border-right: 2px solid #00FBFF !important; }
     [data-baseweb="tag"] { background-color: #00FBFF !important; color: #000 !important; }
 
@@ -32,24 +31,26 @@ st.markdown("""
         transition: all 0.3s ease-in-out;
     }
     [data-testid="stFileUploadDropzone"]:hover {
-        box-shadow: 0 0 15px #00FBFF;
+        box-shadow: 0 0 20px #00FBFF;
     }
 
     /* 4. Engine Primed Pulse Animation */
     div[style*="background-color:rgba(0,251,255,0.1)"] {
-        animation: pulse-animation 2s infinite;
+        animation: pulse-cyan 2s infinite;
+        border: 1px solid #00FBFF !important;
     }
-    @keyframes pulse-animation {
+    @keyframes pulse-cyan {
         0% { box-shadow: 0 0 0 0px rgba(0, 251, 255, 0.7); }
-        100% { box-shadow: 0 0 0 10px rgba(0, 251, 255, 0); }
+        70% { box-shadow: 0 0 0 15px rgba(0, 251, 255, 0); }
+        100% { box-shadow: 0 0 0 0px rgba(0, 251, 255, 0); }
     }
 
     /* 5. Metric Cards Fade-Slide-Up Animation */
-    [data-testid="stMetric"], div[style*="background-color:#161616"] {
-        animation: fadeSlideUp 0.8s ease-out forwards;
+    [data-testid="stMetric"], .stMetric {
+        animation: fadeSlideUp 1s ease-out forwards;
     }
     @keyframes fadeSlideUp {
-        from { opacity: 0; transform: translateY(20px); }
+        from { opacity: 0; transform: translateY(40px); }
         to { opacity: 1; transform: translateY(0); }
     }
 
@@ -57,10 +58,13 @@ st.markdown("""
     .stDataFrame {
         border: 1px solid #333 !important;
         position: relative;
+        overflow: hidden;
     }
     .stDataFrame::before {
-        content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
-        background: #00FBFF; animation: scanLine 3s linear infinite;
+        content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+        background: #00FBFF; box-shadow: 0 0 10px #00FBFF;
+        animation: scanLine 4s linear infinite;
+        z-index: 10;
     }
     @keyframes scanLine { 0% { top: 0%; } 100% { top: 100%; } }
 
@@ -68,9 +72,9 @@ st.markdown("""
     [data-testid="stLoadingIcon"] svg { fill: #00FBFF !important; }
 
     /* 8. Custom Cyan Scrollbar */
-    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar { width: 10px; }
     ::-webkit-scrollbar-track { background: #0e1117; }
-    ::-webkit-scrollbar-thumb { background: #00FBFF; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: #00FBFF; border-radius: 10px; border: 2px solid #0e1117; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -88,8 +92,7 @@ def main():
             label="Get Sample CRM Data",
             data=sample_csv,
             file_name="sample_sales_data.csv",
-            mime="text/csv",
-            help="Download a template to test the terminal immediately"
+            mime="text/csv"
         )
 
     if uploaded_file:
@@ -126,19 +129,10 @@ def main():
             col.markdown('<div style="background-color:#161616; padding:20px; border-radius:10px; border:1px solid #222; text-align:center; color:#444;"><small>AWAITING DATA</small><br><b style="font-size:1.5em;">$ 0.00</b></div>', unsafe_allow_html=True)
 
         st.markdown("""
-<div style="background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); padding: 60px; border-radius: 20px; border: 1px solid #333; text-align: center; margin-top: 20px; box-shadow: 0px 10px 40px rgba(0, 251, 255, 0.1);">
-    <h1 style="color: #FFD700; font-size: 3.5em; margin-bottom: 15px; filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));">⚡</h1>
-    <h2 style="color: #00FBFF; font-family: 'Segoe UI', sans-serif; font-weight: 800; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;">
-        Ready to Generate Insights
-    </h2>
-    <p style="color: #999; font-size: 1.2em; max-width: 600px; margin: 0 auto; line-height: 1.6;">
-        Please upload your CRM data in the sidebar to begin your 
-        <span style="color: #00FBFF; font-weight: bold;">real-time sales analysis</span>.
-    </p>
-    <div style="margin-top: 40px; height: 3px; background: linear-gradient(90deg, transparent, #00FBFF, transparent); width: 60%; margin-left: 20%; box-shadow: 0 0 10px #00FBFF;"></div>
-</div>
-<div style="text-align: center; color: #444; margin-top: 50px; font-size: 0.8em;">
-    Developed by <span style="color: #00FBFF;">Ali-datasmith</span> | High-Velocity Polars Engine ⚡
+<div style="background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); padding: 60px; border-radius: 20px; border: 1px solid #333; text-align: center; margin-top: 20px;">
+    <h1 style="color: #FFD700; font-size: 3.5em; margin-bottom: 15px;">⚡</h1>
+    <h2 style="color: #00FBFF; font-weight: 800; text-transform: uppercase;">Ready to Generate Insights</h2>
+    <p style="color: #999; font-size: 1.2em;">Please upload your CRM data in the sidebar to begin.</p>
 </div>
 """, unsafe_allow_html=True)
 
