@@ -32,8 +32,8 @@ The result is a dashboard that feels instant for the end user, deploys on Stream
 
 ---
 ## 🖥️ Dashboard Preview
-<img width="1365" height="765" alt="dashboard_preview" src="https://github.com/user-attachments/assets/af9ce7d7-fbf4-4742-8b96-4c6de0d9c23d" />
----
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/d8b2bfcf-be6e-4591-a1d5-9c3592c0a463" />
+
 ---
 ## 🎥 Dashboard Video
 https://github.com/user-attachments/assets/a3c5bcec-7ced-4569-becd-a7fcd8abc0cc
