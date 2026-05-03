@@ -91,7 +91,15 @@ def main():
 
     # Footer
     st.markdown("---")
-    st.markdown('<div style="text-align: center; color: #444; font-size: 0.8em;">Developed by Muhammad Ali Rajput | High-Performance Data Terminal</div>', unsafe_allow_html=True)
+    st.markdown(f"""
+    <div style="text-align: center; color: #888; font-size: 0.85em; letter-spacing: 0.1em; font-family: 'Courier New', monospace;">
+        <span style="color: #444;">//</span> 
+        <span style="color: #00FBFF; font-weight: bold;">ARCHITECTED BY</span> 
+        <span style="color: white; font-weight: bold;">Ali-datasmith</span> 
+        <span style="color: #444;">//</span> 
+        <span style="color: #888;">HIGH-PERFORMANCE DATA TERMINAL v1.0</span>
+    </div>
+    """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
