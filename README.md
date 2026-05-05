@@ -74,7 +74,7 @@ date,revenue,rep,region,product,stage
 2024-03-15,12500.00,Sara Ahmed,North,Enterprise Plan,Closed Won
 ```
 
-> **No data?** Click **"Get Sample CRM Data"** in the sidebar to load a built-in 200K row demo dataset instantly.
+> **No data?** Click **"Get Sample CRM Data"** in the sidebar to load a built-in 100+ row demo dataset instantly.
 
 ---
 
