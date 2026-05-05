@@ -38,7 +38,7 @@ st.markdown("""
     @keyframes pulse-status { 0% { box-shadow: 0 0 0 0px rgba(0, 251, 255, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(0, 251, 255, 0); } 100% { box-shadow: 0 0 0 0px rgba(0, 251, 255, 0); } }
     [data-testid="stSidebar"] { border-right: 1px solid #00FBFF !important; }
 
-    /* --- NEW: CYAN GLOW BOX & UPLOADER EFFECT --- */
+    /* --- TERMINAL BOX & UPLOADER (CYAN) --- */
     .terminal-box, [data-testid="stFileUploader"] {
         background: rgba(10, 10, 10, 0.6) !important;
         padding: 20px;
@@ -46,10 +46,26 @@ st.markdown("""
         border: 1px solid #00FBFF !important;
         text-align: center;
         margin-bottom: 20px;
-        box-shadow: 0 0 15px rgba(0, 251, 255, 0.2); /* Soft Cyan Glow */
+        box-shadow: 0 0 15px rgba(0, 251, 255, 0.2); 
     }
     
-    /* Drag & Drop Area Internal Style Fix */
+    /* --- NEW: YELLOW-GREEN NEON FOR SAMPLE DATA BUTTON --- */
+    div.stDownloadButton > button {
+        background-color: rgba(10, 10, 10, 0.6) !important;
+        color: #ADFF2F !important; /* Yellow-Green */
+        border: 1px solid #ADFF2F !important;
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-weight: bold;
+        box-shadow: 0 0 12px rgba(173, 255, 47, 0.4); /* Neon Glow */
+        transition: 0.3s;
+    }
+    div.stDownloadButton > button:hover {
+        box-shadow: 0 0 20px rgba(173, 255, 47, 0.7);
+        color: white !important;
+        background-color: rgba(173, 255, 47, 0.2) !important;
+    }
+
     [data-testid="stFileUploaderDropzone"] {
         background: transparent !important;
         border: none !important;
@@ -70,7 +86,6 @@ def main():
 
         st.markdown("### 📥 Data Ingestion")
         
-        # Glow effect applied via CSS selector above
         uploaded_file = st.sidebar.file_uploader("Upload CRM Export", type=["csv", "xlsx"])
         
         sample_csv = generate_sample_data()
@@ -95,13 +110,9 @@ def main():
             st.info("💡 **Tip:** Please ensure your CSV has all required columns. You can download the **'Sample CRM Data'** from the sidebar for reference.")
             st.stop() 
     else:
-        # Landing Page Content
         st.markdown('<div class="typewriter"><h2>Ready to Generate Insights</h2></div>', unsafe_allow_html=True)
-        
-        # Glow Box for Landing Page
         st.markdown('<div class="terminal-box">Terminal awaiting CRM data stream via Sidebar.</div>', unsafe_allow_html=True)
 
-        # 3 Points Guide
         c1, c2, c3 = st.columns(3)
         with c1:
             st.markdown("#### 📥 Ingest")
@@ -113,7 +124,6 @@ def main():
             st.markdown("#### 📈 Analyze")
             st.caption("Explore interactive terminal views.")
 
-    # Footer
     st.markdown("---")
     st.markdown('<div style="text-align: center; color: #444; font-size: 0.8em;">Developed by Muhammad Ali Rajput | High-Performance Data Terminal</div>', unsafe_allow_html=True)
     st.markdown(f"""
