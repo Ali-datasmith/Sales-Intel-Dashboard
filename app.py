@@ -38,15 +38,21 @@ st.markdown("""
     @keyframes pulse-status { 0% { box-shadow: 0 0 0 0px rgba(0, 251, 255, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(0, 251, 255, 0); } 100% { box-shadow: 0 0 0 0px rgba(0, 251, 255, 0); } }
     [data-testid="stSidebar"] { border-right: 1px solid #00FBFF !important; }
 
-    /* --- NEW: CYAN GLOW BOX --- */
-    .terminal-box {
-        background: rgba(10, 10, 10, 0.6);
-        padding: 30px;
+    /* --- NEW: CYAN GLOW BOX & UPLOADER EFFECT --- */
+    .terminal-box, [data-testid="stFileUploader"] {
+        background: rgba(10, 10, 10, 0.6) !important;
+        padding: 20px;
         border-radius: 15px;
-        border: 1px solid #00FBFF;
+        border: 1px solid #00FBFF !important;
         text-align: center;
-        margin: 20px 0;
-        box-shadow: 0 0 15px rgba(0, 251, 255, 0.3); /* Emerged Cyan Light */
+        margin-bottom: 20px;
+        box-shadow: 0 0 15px rgba(0, 251, 255, 0.2); /* Soft Cyan Glow */
+    }
+    
+    /* Drag & Drop Area Internal Style Fix */
+    [data-testid="stFileUploaderDropzone"] {
+        background: transparent !important;
+        border: none !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -63,7 +69,10 @@ def main():
             st.markdown('<div class="status-badge pulse">🟢 POLARS ACTIVE</div>', unsafe_allow_html=True)
 
         st.markdown("### 📥 Data Ingestion")
+        
+        # Glow effect applied via CSS selector above
         uploaded_file = st.sidebar.file_uploader("Upload CRM Export", type=["csv", "xlsx"])
+        
         sample_csv = generate_sample_data()
         st.download_button(label="Get Sample CRM Data", data=sample_csv, file_name="sample.csv", mime="text/csv")
 
@@ -89,7 +98,7 @@ def main():
         # Landing Page Content
         st.markdown('<div class="typewriter"><h2>Ready to Generate Insights</h2></div>', unsafe_allow_html=True)
         
-        # --- Applied terminal-box class here ---
+        # Glow Box for Landing Page
         st.markdown('<div class="terminal-box">Terminal awaiting CRM data stream via Sidebar.</div>', unsafe_allow_html=True)
 
         # 3 Points Guide
