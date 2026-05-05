@@ -37,6 +37,17 @@ st.markdown("""
     .pulse { animation: pulse-status 2s infinite; }
     @keyframes pulse-status { 0% { box-shadow: 0 0 0 0px rgba(0, 251, 255, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(0, 251, 255, 0); } 100% { box-shadow: 0 0 0 0px rgba(0, 251, 255, 0); } }
     [data-testid="stSidebar"] { border-right: 1px solid #00FBFF !important; }
+
+    /* --- NEW: CYAN GLOW BOX --- */
+    .terminal-box {
+        background: rgba(10, 10, 10, 0.6);
+        padding: 30px;
+        border-radius: 15px;
+        border: 1px solid #00FBFF;
+        text-align: center;
+        margin: 20px 0;
+        box-shadow: 0 0 15px rgba(0, 251, 255, 0.3); /* Emerged Cyan Light */
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -71,14 +82,15 @@ def main():
             with tab4: DashboardViews.show_rep_performance()
 
         except Exception as e:
-            # --- UPDATED ERROR HANDLING ---
             st.error(f"⚠️ **Invalid File Format:** {e}")
             st.info("💡 **Tip:** Please ensure your CSV has all required columns. You can download the **'Sample CRM Data'** from the sidebar for reference.")
             st.stop() 
     else:
         # Landing Page Content
         st.markdown('<div class="typewriter"><h2>Ready to Generate Insights</h2></div>', unsafe_allow_html=True)
-        st.markdown('<div style="background:rgba(10,10,10,0.4); padding:30px; border-radius:15px; border:1px solid #222; text-align:center; margin:20px 0;">Terminal awaiting CRM data stream via Sidebar.</div>', unsafe_allow_html=True)
+        
+        # --- Applied terminal-box class here ---
+        st.markdown('<div class="terminal-box">Terminal awaiting CRM data stream via Sidebar.</div>', unsafe_allow_html=True)
 
         # 3 Points Guide
         c1, c2, c3 = st.columns(3)
