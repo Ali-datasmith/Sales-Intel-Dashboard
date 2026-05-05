@@ -14,7 +14,8 @@
  
 ## 🖥️ Dashboard Preview
  
-<img width="1366" height="768" alt="Sales Intel Terminal Dashboard" src="https://github.com/user-attachments/assets/d8b2bfcf-be6e-4591-a1d5-9c3592c0a463" />
+<img width="1366" height="768" alt="Screenshot 2026-05-05 11 45 45 PM" src="https://github.com/user-attachments/assets/e6ebbfa3-8cc8-4337-982c-d06ece6b2b7c" />
+
 
 ---
  
@@ -204,7 +205,7 @@ No environment variables. No secrets. No database. Runs within Streamlit Cloud f
  
 ## Dashboard Video
  
-https://github.com/user-attachments/assets/29cbbd65-1d40-45c1-848d-f04d4e30b83c
+https://github.com/user-attachments/assets/b297d71c-80b1-4ae2-860d-3f17fde00ab0
  
 ---
  
