@@ -36,7 +36,7 @@ The result is a dashboard that feels instant for the end user, deploys on Stream
 
 ---
 ## 🎥 Dashboard Video
-https://github.com/user-attachments/assets/a3c5bcec-7ced-4569-becd-a7fcd8abc0cc
+https://github.com/user-attachments/assets/29cbbd65-1d40-45c1-848d-f04d4e30b83c
 
 ---
 ## Tech Stack
