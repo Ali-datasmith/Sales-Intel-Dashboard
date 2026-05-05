@@ -71,12 +71,15 @@ def main():
             with tab4: DashboardViews.show_rep_performance()
 
         except Exception as e:
-            st.error(f"Error: {e}")
+            # --- UPDATED ERROR HANDLING ---
+            st.error(f"⚠️ **Invalid File Format:** {e}")
+            st.info("💡 **Tip:** Please ensure your CSV has all required columns. You can download the **'Sample CRM Data'** from the sidebar for reference.")
+            st.stop() 
     else:
         # Landing Page Content
         st.markdown('<div class="typewriter"><h2>Ready to Generate Insights</h2></div>', unsafe_allow_html=True)
         st.markdown('<div style="background:rgba(10,10,10,0.4); padding:30px; border-radius:15px; border:1px solid #222; text-align:center; margin:20px 0;">Terminal awaiting CRM data stream via Sidebar.</div>', unsafe_allow_html=True)
-        
+
         # 3 Points Guide
         c1, c2, c3 = st.columns(3)
         with c1:
@@ -91,6 +94,7 @@ def main():
 
     # Footer
     st.markdown("---")
+    st.markdown('<div style="text-align: center; color: #444; font-size: 0.8em;">Developed by Muhammad Ali Rajput | High-Performance Data Terminal</div>', unsafe_allow_html=True)
     st.markdown(f"""
     <div style="text-align: center; color: #888; font-size: 0.85em; letter-spacing: 0.1em; font-family: 'Courier New', monospace;">
         <span style="color: #444;">//</span> 
