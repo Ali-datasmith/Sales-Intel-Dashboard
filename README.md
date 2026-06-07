@@ -1,3 +1,5 @@
+#⚙️ In Update ...
+
 # ⚡ Sales Intel Terminal
  
 > **A Power BI replacement built entirely in Python — zero licences, zero infrastructure, zero compromise.**
