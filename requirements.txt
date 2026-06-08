@@ -1,6 +1,60 @@
-streamlit
-pandas
-polars
-duckdb
-plotly
-openpyxl
+# ============================================================================
+# Sales Intel Terminal - Dependency Manifest
+# ============================================================================
+# CRITICAL: All versions are pinned for reproducibility and Streamlit Cloud
+# compatibility. Update carefully—test locally before deploying.
+# ============================================================================
+
+# ── Core Framework ──
+streamlit==1.36.0              # Web app framework + sidebar/session management
+plotly==5.22.0                 # Interactive charts (Funnel, Heatmap, Bar, Line)
+
+# ── Data Processing ──
+pandas==2.2.0                  # Tabular data manipulation (Excel reads, pivots)
+polars==1.0.0                  # High-speed columnar DataFrame engine (Rust-backed)
+pyarrow==14.0.2                # CRITICAL: Polars ↔ Pandas interop + Excel parsing
+duckdb==1.0.0                  # In-memory SQL analytics on Polars DataFrames
+
+# ── File I/O ──
+openpyxl==3.11.2               # Excel file reading/writing (required for pd.read_excel)
+
+# ── Authentication & Security ──
+bcrypt==4.1.1                  # Password hashing for login.py credentials
+python-dotenv==1.0.0           # Optional: .env file management (for future API keys)
+
+# ============================================================================
+# OPTIONAL DEPENDENCIES (uncomment if needed)
+# ============================================================================
+# numpy==1.24.3                # Numerical computing (installed by pandas/polars)
+# scipy==1.11.4                # Scientific computing (if adding advanced stats)
+# scikit-learn==1.3.2          # ML models (if adding predictive analytics)
+
+# ============================================================================
+# NOTES FOR DEPLOYMENT
+# ============================================================================
+# Streamlit Cloud Compatibility:
+# - All packages must have wheels available for Linux (x86_64)
+# - Avoid packages requiring system-level compilation (rare, but check)
+# - Free tier: 1 GB RAM limit (supports ~200K row datasets)
+#
+# Testing locally:
+#   python -m venv venv
+#   source venv/bin/activate    # macOS/Linux
+#   pip install -r requirements.txt
+#   streamlit run app.py
+#
+# Deploying to Streamlit Cloud:
+#   1. Push repo to GitHub (including this file)
+#   2. Visit share.streamlit.io
+#   3. Select repo → set main file to "app.py"
+#   4. Deploy (Streamlit installs requirements automatically)
+#
+# Version Rationale:
+# - streamlit 1.36: Latest stable with improved session state handling
+# - polars 1.0: Major release with optimized Rust engine + stable API
+# - duckdb 1.0: Production-ready SQL-on-DataFrames
+# - pandas 2.2: Latest stable with PyArrow backend support
+# - pyarrow 14: Fixes Polars ↔ Pandas interop edge cases
+# - plotly 5.22: Latest with improved dark-mode rendering
+# - bcrypt 4.1: Modern password hashing (OWASP-approved)
+# ============================================================================
