@@ -134,7 +134,8 @@ class ChartFactory:
         Generates a time-series line chart for revenue/metric trends.
         
         Args:
-            df: Polars DataFrame with 'date' and 'revenue' columns
+            df: Polars DataFrame with 'month' and 'revenue' columns
+                (produced by views.py monthly aggregation)
             title: Chart title
             
         Returns:
@@ -145,11 +146,11 @@ class ChartFactory:
 
         fig = px.line(
             df.to_pandas(),
-            x="date",
+            x="month",        # ✅ FIXED: column is 'month' not 'date'
             y="revenue",
             title=title,
             template="plotly_dark",
-            line_shape="spline",  # Smooth curves
+            line_shape="spline",
             render_mode="svg"
         )
 
@@ -158,15 +159,15 @@ class ChartFactory:
             paper_bgcolor="rgba(0,0,0,0)",
             font=dict(family="Inter, sans-serif", color=LIGHT_SLATE),
             hovermode="x unified",
-            xaxis_title="Date",
+            xaxis_title="Month",
             yaxis_title="Revenue ($)"
         )
         
         fig.update_traces(
             line=dict(width=3, color=PRIMARY_EMERALD),
             fill="tozeroy",
-            fillcolor="rgba(5, 150, 105, 0.1)",  # Emerald with transparency
-            hovertemplate="<b>%{x|%B %d, %Y}</b><br>Revenue: $%{y:,.0f}<extra></extra>"
+            fillcolor="rgba(5, 150, 105, 0.1)",
+            hovertemplate="<b>%{x|%b %Y}</b><br>Revenue: $%{y:,.0f}<extra></extra>"
         )
         
         return fig
@@ -210,7 +211,7 @@ class ChartFactory:
             plot_bgcolor="rgba(0,0,0,0)",
             paper_bgcolor="rgba(0,0,0,0)",
             font=dict(family="Inter, sans-serif", color=LIGHT_SLATE),
-            color_continuous_colorbar=dict(
+            coloraxis_colorbar=dict(
                 title="Revenue ($)",
                 tickprefix="$"
             )
@@ -258,10 +259,3 @@ class ChartFactory:
         )
         
         return fig
-
-
-# ── Theme Color Reference ──
-# PRIMARY_EMERALD (#059669): Main brand color for primary metrics
-# ACCENT_GOLD (#FBBF24):      Highlights, success indicators, premium elements
-# SECONDARY_TEAL (#0D9488):  Secondary data series, supporting visuals
-# Use sparingly with high contrast on dark backgrounds for accessibility
