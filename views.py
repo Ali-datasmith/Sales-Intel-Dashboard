@@ -160,7 +160,7 @@ class DashboardViews:
             section_header("Revenue by Region", "")
             if not rev_by_region.is_empty():
                 fig = ChartFactory.bar_revenue(rev_by_region, "region", "Revenue by Region")
-                st.plotly_chart(fig, width='stretch')
+                st.plotly_chart(fig, width='stretch', key="overview_rev_region")
             else:
                 _no_data_warning("regions")
 
@@ -168,7 +168,7 @@ class DashboardViews:
             section_header("Deals by Stage", "")
             if not stage_counts.is_empty():
                 fig = ChartFactory.bar_count(stage_counts, "stage", "deal_count", "Deals by Stage")
-                st.plotly_chart(fig, width='stretch')
+                st.plotly_chart(fig, width='stretch', key="overview_deals_stage")
             else:
                 _no_data_warning("stages")
 
@@ -179,7 +179,7 @@ class DashboardViews:
 
         if not monthly_df.is_empty():
             fig_trend = ChartFactory.line_trend(monthly_df, "Monthly Revenue Trend")
-            st.plotly_chart(fig_trend, width='stretch')
+            st.plotly_chart(fig_trend, width='stretch', key="overview_trend")
         else:
             _no_data_warning("the trend chart")
 
@@ -244,7 +244,7 @@ class DashboardViews:
 
         if not heatmap_data.is_empty():
             fig_heat = ChartFactory.heatmap_rep_region(heatmap_data)
-            st.plotly_chart(fig_heat, width='stretch')
+            st.plotly_chart(fig_heat, width='stretch', key="regional_heatmap")
         else:
             _no_data_warning("the heatmap")
 
@@ -258,13 +258,13 @@ class DashboardViews:
         with c_left:
             if not rev_by_region.is_empty():
                 fig = ChartFactory.bar_revenue(rev_by_region, "region", "Revenue by Region")
-                st.plotly_chart(fig, width='stretch')
+                st.plotly_chart(fig, width='stretch', key="regional_rev_region")
 
         with c_right:
             section_header("Revenue by Rep", "")
             if not rev_by_rep.is_empty():
                 fig = ChartFactory.bar_revenue(rev_by_rep, "rep", "Revenue by Rep")
-                st.plotly_chart(fig, width='stretch')
+                st.plotly_chart(fig, width='stretch', key="regional_rev_rep")
 
 
     # ══════════════════════════════════════════════════════════════
@@ -320,7 +320,7 @@ class DashboardViews:
             funnel_df,
             title="Pipeline Conversion — Prospecting → Closed Won"
         )
-        st.plotly_chart(fig_funnel, width='stretch')
+        st.plotly_chart(fig_funnel, width='stretch', key="funnel_chart")
 
         st.markdown("<br>", unsafe_allow_html=True)
 
@@ -399,13 +399,13 @@ class DashboardViews:
             section_header("Top 5 Performers", "")
             if not top_reps.is_empty():
                 fig_top = ChartFactory.bar_revenue(top_reps, "rep", "Top 5 Reps by Revenue")
-                st.plotly_chart(fig_top, width='stretch')
+                st.plotly_chart(fig_top, width='stretch', key="rep_top5")
 
         with c_right:
             section_header("Bottom 5 Performers", "")
             if not bottom_reps.is_empty():
                 fig_bot = ChartFactory.bar_revenue(bottom_reps, "rep", "Bottom 5 Reps by Revenue")
-                st.plotly_chart(fig_bot, width='stretch')
+                st.plotly_chart(fig_bot, width='stretch', key="rep_bottom5")
 
         st.markdown("<br>", unsafe_allow_html=True)
 
