@@ -31,20 +31,18 @@ from views import DashboardViews
 from utils import generate_sample_data
 from login import render_login, render_logout_button
 
-
 # ══════════════════════════════════════════════════════════════════
 # PAGE CONFIG — called ONCE, before any other st.* call
 # ══════════════════════════════════════════════════════════════════
 
 st.set_page_config(
-    page_title            = "Sales Intel Terminal",
-    page_icon             = "📊",
-    layout                = "wide",
-    initial_sidebar_state = "expanded"
+    page_title="Sales Intel Terminal",
+    page_icon="📊",
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
 inject_css()
-
 
 # ══════════════════════════════════════════════════════════════════
 # LOGIN GATE
@@ -61,18 +59,13 @@ if not st.session_state.get("authenticated", False):
 
 def build_sidebar() -> Optional[st.runtime.uploaded_file_manager.UploadedFile]:
     """
-    Renders the premium sidebar:
-        - Branded logo strip
-        - User identity panel + logout
-        - System status indicator
-        - Data ingestion section (uploader + sample download)
-        - Tech stack credits
+    Renders the premium sidebar layout including system telemetry,
+    user identities, and custom data dropzones.
 
     Returns:
-        uploaded_file or None
+        Optional[UploadedFile]: The raw file handle uploaded by the client.
     """
     with st.sidebar:
-
         # ── Logo strip ──
         st.markdown(
             f"""
@@ -103,10 +96,10 @@ def build_sidebar() -> Optional[st.runtime.uploaded_file_manager.UploadedFile]:
         )
 
         # ── User identity panel ──
-        username     = st.session_state.get("username", "user")
+        username = st.session_state.get("username", "user")
         display_name = st.session_state.get("display_name", username.title())
-        role         = st.session_state.get("role", "viewer")
-        role_color   = ACCENT_GOLD if role == "admin" else SECONDARY_TEAL
+        role = st.session_state.get("role", "viewer")
+        role_color = ACCENT_GOLD if role == "admin" else SECONDARY_TEAL
 
         st.markdown(
             f"""
@@ -121,8 +114,7 @@ def build_sidebar() -> Optional[st.runtime.uploaded_file_manager.UploadedFile]:
                 <div style="
                     display:flex;
                     align-items:center;
-                    justify-content:space-between;
-                ">
+                    justify-content:space-between;                ">
                     <div>
                         <div style="
                             font-family:Space Grotesk,sans-serif;
@@ -156,8 +148,7 @@ def build_sidebar() -> Optional[st.runtime.uploaded_file_manager.UploadedFile]:
 
         # ── System status ──
         is_active = st.session_state.get("data_processed", False)
-        file_name = st.session_state.get("file_key", "")[:30] if is_active else ""
-        records   = st.session_state.get("df").shape[0] if is_active and "df" in st.session_state else 0
+        records = st.session_state.get("df").shape[0] if is_active and "df" in st.session_state else 0
 
         if is_active:
             st.markdown(
@@ -236,7 +227,6 @@ def build_sidebar() -> Optional[st.runtime.uploaded_file_manager.UploadedFile]:
             label_visibility="collapsed"
         )
         st.caption("Max 200 MB · CSV · XLSX")
-
         st.markdown("<br>", unsafe_allow_html=True)
 
         # ── Sample data download ──
@@ -253,35 +243,19 @@ def build_sidebar() -> Optional[st.runtime.uploaded_file_manager.UploadedFile]:
         st.markdown(
             f"""
             <div style="
-                margin-top:2rem;
-                padding-top:1rem;
-                border-top:1px solid {GLASS_BORDER};
-            ">
+                margin-top:2rem;                padding-top:1rem;                border-top:1px solid {GLASS_BORDER};            ">
                 <div style="
-                    font-family:JetBrains Mono,monospace;
-                    font-size:0.6rem;
-                    text-transform:uppercase;
-                    letter-spacing:0.1em;
-                    color:{TEXT_MUTED};
-                    margin-bottom:0.5rem;
-                ">Powered By</div>
+                    font-family:JetBrains Mono,monospace;                    font-size:0.6rem;                    text-transform:uppercase;                    letter-spacing:0.1em;                    color:{TEXT_MUTED};                    margin-bottom:0.5rem;                ">Powered By</div>
                 <div style="
-                    font-family:JetBrains Mono,monospace;
-                    font-size:0.62rem;
-                    color:{TEXT_SECONDARY};
-                    line-height:1.9;
-                    letter-spacing:0.04em;
-                ">
+                    font-family:JetBrains Mono,monospace;                    font-size:0.62rem;                    color:{TEXT_SECONDARY};                    line-height:1.9;                    letter-spacing:0.04em;                ">
                     <span style="color:{PRIMARY_EMERALD};">▸</span> Polars 1.0 · Rust Engine<br>
                     <span style="color:{PRIMARY_EMERALD};">▸</span> DuckDB 1.0 · In-Memory SQL<br>
                     <span style="color:{PRIMARY_EMERALD};">▸</span> Plotly 5.22 · Interactive Charts<br>
-                    <span style="color:{PRIMARY_EMERALD};">▸</span> Streamlit 1.36 · UI Layer
-                </div>
+                    <span style="color:{PRIMARY_EMERALD};">▸</span> Streamlit 1.36 · UI Layer                </div>
             </div>
             """,
             unsafe_allow_html=True
         )
-
     return uploaded_file
 
 
@@ -291,7 +265,6 @@ def build_sidebar() -> Optional[st.runtime.uploaded_file_manager.UploadedFile]:
 
 def render_landing() -> None:
     """Premium hero landing page shown when no data is loaded."""
-
     # ── Hero section ──
     st.markdown(
         f"""
@@ -305,7 +278,6 @@ def render_landing() -> None:
                 font-weight:600;
                 margin-bottom:1rem;
             ">{pulse_dot('success')} &nbsp;HIGH-PERFORMANCE SALES ANALYTICS TERMINAL</div>
-
             <h1 style="
                 font-family:Space Grotesk,sans-serif;
                 font-size:clamp(2.8rem,5vw,4.5rem);
@@ -321,7 +293,6 @@ def render_landing() -> None:
                     text-shadow:0 0 40px rgba(5,150,105,0.4);
                 ">TERMINAL</span>
             </h1>
-
             <p style="
                 font-family:Space Grotesk,sans-serif;
                 font-size:1.05rem;
@@ -350,20 +321,8 @@ def render_landing() -> None:
             border:1px dashed rgba(5,150,105,0.35);
         ">
             <div style="font-size:3rem;margin-bottom:1rem;">📂</div>
-            <div style="
-                font-family:Space Grotesk,sans-serif;
-                font-weight:700;
-                font-size:1.1rem;
-                color:{TEXT_PRIMARY};
-                margin-bottom:0.5rem;
-            ">No Data Loaded</div>
-            <div style="
-                font-family:JetBrains Mono,monospace;
-                color:{TEXT_SECONDARY};
-                font-size:0.78rem;
-                letter-spacing:0.05em;
-                line-height:1.8;
-            ">
+            <div style="                font-family:Space Grotesk,sans-serif;                font-weight:700;                font-size:1.1rem;                color:{TEXT_PRIMARY};                margin-bottom:0.5rem;            ">No Data Loaded</div>
+            <div style="                font-family:JetBrains Mono,monospace;                color:{TEXT_SECONDARY};                font-size:0.78rem;                letter-spacing:0.05em;                line-height:1.8;            ">
                 Upload a <span style="color:{ACCENT_GOLD};font-weight:600;">CSV</span>
                 or <span style="color:{ACCENT_GOLD};font-weight:600;">Excel</span>
                 file from the sidebar to begin.<br>
@@ -376,14 +335,10 @@ def render_landing() -> None:
 
     # ── Feature cards ──
     features = [
-        ("📥", "Ingest",
-         "Upload raw sales CSV or Excel. Auto schema detection. Zero manual column mapping required."),
-        ("⚙️", "Process",
-         "Polars Rust engine handles 200K rows in under 5 seconds. DuckDB powers all SQL analytics."),
-        ("🌪️", "Funnel",
-         "Stage-by-stage drop-off analysis. Conversion rates from Prospecting → Closed Won."),
-        ("📈", "Analyze",
-         "4 interactive views: Overview, Regional Heatmap, Funnel, Rep Leaderboard Scorecard."),
+        ("📥", "Ingest", "Upload raw sales CSV or Excel. Auto schema detection. Zero manual column mapping required."),
+        ("⚙️", "Process", "Polars Rust engine handles 200K rows in under 5 seconds. DuckDB powers all SQL analytics."),
+        ("🌪️", "Funnel", "Stage-by-stage drop-off analysis. Conversion rates from Prospecting → Closed Won."),
+        ("📈", "Analyze", "4 interactive views: Overview, Regional Heatmap, Funnel, Rep Leaderboard Scorecard."),
     ]
 
     cols = st.columns(4, gap="medium")
@@ -418,12 +373,12 @@ def render_landing() -> None:
 
     # ── Stats strip ──
     stats = [
-        ("200K",  "MAX ROWS"),
-        ("< 5s",  "LOAD TIME"),
-        ("4",     "VIEWS"),
-        ("1.0",   "POLARS"),
-        ("1.0",   "DUCKDB"),
-        ("$0",    "INFRA COST"),
+        ("200K", "MAX ROWS"),
+        ("< 5s", "LOAD TIME"),
+        ("4", "VIEWS"),
+        ("1.0", "POLARS"),
+        ("1.0", "DUCKDB"),
+        ("$0", "INFRA COST"),
     ]
 
     cols = st.columns(len(stats))
@@ -460,15 +415,17 @@ def render_landing() -> None:
         "Expected Data Schema",
         "ENSURE YOUR CSV OR EXCEL CONTAINS THESE COLUMNS"
     )
+
     schema_cols = st.columns(3, gap="medium")
     schema = [
-        ("date",    "Date of the deal/transaction",     "2024-01-15"),
-        ("revenue", "Deal value (numeric or $string)",  "$1,200.00"),
-        ("rep",     "Sales representative name",        "Alice Johnson"),
-        ("region",  "Geographic region or territory",   "North America"),
-        ("product", "Product or service sold",          "Enterprise Plan"),
-        ("stage",   "CRM pipeline stage",               "Closed Won"),
+        ("date", "Date of the deal/transaction", "2024-01-15"),
+        ("revenue", "Deal value (numeric or $string)", "$1,200.00"),
+        ("rep", "Sales representative name", "Alice Johnson"),
+        ("region", "Geographic region or territory", "North America"),
+        ("product", "Product or service sold", "Enterprise Plan"),
+        ("stage", "CRM pipeline stage", "Closed Won"),
     ]
+
     for i, (col_name, desc, example) in enumerate(schema):
         with schema_cols[i % 3]:
             st.markdown(
@@ -511,6 +468,7 @@ def render_landing() -> None:
 # ══════════════════════════════════════════════════════════════════
 
 def render_footer() -> None:
+    """Renders data terminal bottom credits and engine statuses."""
     st.markdown("<br><br>", unsafe_allow_html=True)
     st.markdown(
         f"""
@@ -551,48 +509,35 @@ def render_footer() -> None:
 
 
 # ══════════════════════════════════════════════════════════════════
-# MAIN
+# MAIN ROUTER LOOP
 # ══════════════════════════════════════════════════════════════════
 
 def main() -> None:
     """
-    Application entry point.
-
-    Flow:
-        1. build_sidebar() → uploaded_file
-        2. If file:
-             a. File-key cache check → pipeline only on new file
-             b. ingest → transform → seed DuckDB
-             c. SidebarFilters.render() (needs data in session)
-             d. render_header() — branded status bar
-             e. 4 tabbed views
-        3. Else: render_landing()
-        4. render_footer()
+    Application core runner. Handles unified processing state pipelines
+    and lazy-renders active tab dashboard modules.
     """
-
     uploaded_file = build_sidebar()
 
     if uploaded_file is not None:
-
         # ── Data pipeline — cached by file identity ──
         file_key = uploaded_file.name + str(uploaded_file.size)
 
         if st.session_state.get("file_key") != file_key:
             with st.spinner("⚡ Processing your data..."):
                 try:
-                    raw_df   = DataIngestor.load_data(uploaded_file)
+                    raw_df = DataIngestor.load_data(uploaded_file)
                     clean_df = DataTransformer.clean_data(raw_df)
                     db_engine.seed_data(clean_df)
 
-                    st.session_state["df"]             = clean_df
+                    st.session_state["df"] = clean_df
                     st.session_state["data_processed"] = True
-                    st.session_state["file_key"]       = file_key
+                    st.session_state["file_key"] = file_key
 
                     st.success(
                         f"✅ Loaded **{clean_df.shape[0]:,} records** "
                         f"across **{clean_df.shape[1]} columns** — ready."
                     )
-
                 except Exception as e:
                     st.markdown(
                         f"""
@@ -606,13 +551,7 @@ def main() -> None:
                         ">
                             <div style="color:#EF4444;font-weight:700;margin-bottom:0.5rem;">
                                 ⚠ INGESTION ERROR
-                            </div>
-                            <div style="color:{TEXT_SECONDARY};">{e}</div>
-                            <div style="color:{TEXT_MUTED};margin-top:0.5rem;font-size:0.72rem;">
-                                Ensure columns: date · revenue · rep · region · product · stage
-                            </div>
-                        </div>
-                        """,
+                            </div>                            <div style="color:{TEXT_SECONDARY};">{e}</div>                            <div style="color:{TEXT_MUTED};margin-top:0.5rem;font-size:0.72rem;">                                Ensure columns: date · revenue · rep · region · product · stage                            </div>                        </div>                        """,
                         unsafe_allow_html=True
                     )
                     st.stop()
@@ -642,13 +581,11 @@ def main() -> None:
             DashboardViews.show_funnel_analysis(clean_df, filter_state)
         with tab4:
             DashboardViews.show_rep_performance(clean_df, filter_state)
-
     else:
         render_landing()
 
     render_footer()
 
 
-# ── Entry point ──
 if __name__ == "__main__":
     main()
