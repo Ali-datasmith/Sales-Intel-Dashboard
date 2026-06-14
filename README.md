@@ -23,7 +23,8 @@
 <br>
 
 <!-- SCREENSHOT: Full dashboard — Overview tab loaded with sample data. Show all 4 KPI cards, Revenue by Region chart, Deals by Stage chart visible. Dark Emerald theme. -->
-![Dashboard Preview][]
+![Dashboard Preview][<img width="1366" height="768" alt="Screenshot 2026-06-14 11 13 58 PM" src="https://github.com/user-attachments/assets/4fc8e8da-a5a1-440e-9ef2-5fa49dc2f359" />
+]
 
 </div>
 
@@ -72,7 +73,8 @@ Four fully interactive views — each with live sidebar filters, CSV export, and
 Revenue KPIs, month-over-month growth, revenue by region, deals by stage, product breakdown, and monthly trend line — all in one view.
 
 <!-- SCREENSHOT: Overview tab. KPI strip at top showing Total Revenue, Total Deals, Avg Deal Size, Regions, Products in Gold mono font. Revenue by Region bar chart on left, Deals by Stage on right. Monthly trend line at bottom. -->
-![Overview][]
+![Overview][<img width="1366" height="768" alt="Screenshot 2026-06-14 11 15 54 PM" src="https://github.com/user-attachments/assets/140222db-2821-4d2a-a479-7f02ffb360f9" />
+]
 
 <br>
 
@@ -80,7 +82,8 @@ Revenue KPIs, month-over-month growth, revenue by region, deals by stage, produc
 Rep × Region revenue density heatmap. Instantly identify your top territories, coverage gaps, and which reps are underperforming in which regions.
 
 <!-- SCREENSHOT: Regional tab. Large heatmap centre screen showing rep names on Y axis and regions on X axis. Emerald-to-Gold color scale. Region bar and Rep bar charts below in two columns. -->
-![Regional][]
+![Regional][<img width="1366" height="768" alt="Screenshot 2026-06-14 11 16 28 PM" src="https://github.com/user-attachments/assets/98c67d49-25be-4bc9-8b5a-d29fbcd3f8e1" />
+]
 
 <br>
 
@@ -88,7 +91,8 @@ Rep × Region revenue density heatmap. Instantly identify your top territories, 
 Stage-by-stage funnel with Emerald → Gold color gradient. Stage Health panel alongside the funnel showing per-stage deal count, % of pipeline, and status badge (WON / OK / MID / LOW).
 
 <!-- SCREENSHOT: Funnel tab. Left 2/3 shows the Plotly funnel chart with Prospecting → Qualification → Proposal → Negotiation → Closed Won. Right 1/3 shows Stage Health cards with colored badges and mini progress bars. -->
-![Funnel][]
+![Funnel][<img width="1366" height="768" alt="Screenshot 2026-06-14 11 16 47 PM" src="https://github.com/user-attachments/assets/73496fe2-0a73-4712-a81d-d516a24c1a5f" />
+]
 
 <br>
 
@@ -96,7 +100,8 @@ Stage-by-stage funnel with Emerald → Gold color gradient. Stage Health panel a
 Individual rep scorecard grid with rank medals, Gold revenue values, deal counts, and mini progress bars relative to the top performer. Full ranked leaderboard table below.
 
 <!-- SCREENSHOT: Rep Performance tab. 3-column grid of rep scorecard cards — each showing rep name, 🥇🥈🥉 rank, Gold revenue, deal count, and green progress bar. Full leaderboard table at bottom. -->
-![Rep Performance][]
+![Rep Performance][<img width="1366" height="768" alt="Screenshot 2026-06-14 11 17 13 PM" src="https://github.com/user-attachments/assets/0170a93d-d62f-4c33-b223-40cf1eb84ed3" />
+]
 
 ---
 
@@ -110,7 +115,8 @@ Access is protected by a **single-user login gate** — the dashboard is complet
 - Glass-morphism login screen with animated Emerald scanline effect
 
 <!-- SCREENSHOT: Login screen centred on dark Emerald background. Glass card with 📊 icon, "SALES INTEL TERMINAL" title in white with green accent, username + password fields, green AUTHENTICATE button. Scanline animation visible. -->
-![Login Screen][]
+![Login Screen][<img width="1366" height="768" alt="Screenshot 2026-06-14 11 17 43 PM" src="https://github.com/user-attachments/assets/a681625f-fba3-431f-978f-001e26eb425c" />
+]
 
 ---
 
@@ -271,7 +277,7 @@ Replace the `password_hash` value in `credentials.py` with the output.
 ## Dashboard Video
 
 <!-- VIDEO: Replace with Loom or GitHub-hosted walkthrough. Show login → upload CSV → Overview KPIs → Regional heatmap → Funnel → Rep scorecards → logout. Aim for 90–120 seconds. -->
-[]
+[https://youtu.be/j4qpUIL95nU]
 
 ---
 
