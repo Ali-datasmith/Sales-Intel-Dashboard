@@ -284,6 +284,7 @@ Replace the `password_hash` value in `credentials.py` with the output.
 ## Author
 
 **Muhammad Ali Rajput** — Data App Developer · Python · Streamlit · Analytics Engineering
+
 [![GitHub](https://img.shields.io/badge/GitHub-Ali--datasmith-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Ali-datasmith)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Muhammad_Ali_Rajput-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/YOUR_LINKEDIN_USERNAME)
 
